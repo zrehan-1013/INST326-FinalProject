@@ -1,3 +1,10 @@
+"""
+Data modules for the cyber security log analyzer project
+
+This module, LogEntry class, stores information from one parsed log line. A LogEntry object represents a single
+authentication event that can later be analyzer for suspicous behavoir 
+"""
+
 class LogEntry:
     def __init__(self, timestamp, ip_addr, username, status):
         """
@@ -14,5 +21,22 @@ class LogEntry:
         self.username = username
         self.status = status
 
-if __name__ == "__main__":
-    pass
+def is_failed_login(self):
+    """
+    Docstring for is_failed_login, checks log for failed login attempts. Uses usernames and authenticaion to check who logged in 
+    and if it was succesful or not
+    
+    :param self: True unless the statment is 'Fail'
+    """
+
+    return self.status.upper() == "FAIL"
+
+
+def __str__(self):
+    """
+    Docstring for __str__
+    
+    Return a readable string for the long entry
+    :param self: Formatted string describing the log entry
+    """
+    return(f"{self.timestamp} | {self.ip_addr} | {self.username} | {self.status}")
