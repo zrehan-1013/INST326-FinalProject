@@ -9,17 +9,19 @@ class ReportGenerator:
     total failed: the number of failed login attempts
     suspicousip: a list of suspicous ips
     """
+    def generate_report(self, total_failed, suspiciious_ips):
+        lines = []
+        lines.append("--Log Report--")
+        lines.append(f"Total failed logins: {total_failed}")
+        lines.append(f"Suspicious IPs: {len(suspicious_ips)}")
 
-    lines = []
-    lines.append("--Log Report--")
-    lines.append(f"Total failed logins: {total_failed}")
-    lines.append(f"Suspicious IPs: {len(suspicious_ips)}")
+        if suspicious_ips:
+            lines.append("Flagged IP addresses:")
+            for ip_address in suspicious_ips:
+                lines.append(f"- {ip_address}")
+            else:
+                lines.append("No suspicious IPs detected.")
 
-    if suspicious_ips:
-        lines.append("Flagged IP addresses:")
-        for ip_address in suspicious_ips:
-            lines.append(f"- {ip_address}")
-        else:
-            lines.append("No suspicious IPs detected.")
+        return "\n".join(lines)
 
-    return "\n".join(lines)
+    
