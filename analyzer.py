@@ -34,6 +34,9 @@ class Analyzer:
         for entry in entries:
             if entry.is_failed_login():
                 if entry.ip_address not in attempts:
+                    attempts[entry.ip_addr] = 0
+                attempts[entry.ip_addr] += 1
+        return attempts
 
     def detect_suspicous_ips(self, entries, threshold=3):
         """
