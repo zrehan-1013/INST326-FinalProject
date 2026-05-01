@@ -30,6 +30,13 @@ class LogParser:
 
         parts = line.strip.split(",")
 
+        if len(parts) != 4:
+            raise ValueError("Invalid format")
+        
+        timestamp, ip_addr, username, status = parts
+        return LogEntry(timestamp, ip_addr, username, status)
+    
+
 def parse_file(self, filename):
     """
     Read a log file and parse each line into the logentry objects
