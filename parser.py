@@ -8,6 +8,7 @@ to make it easier to read
 
 from log_model import LogEntry
 
+
 class LogParser:
     """
     Parse raw log lines into LogEntry objects.
@@ -25,30 +26,36 @@ class LogParser:
 
         Args:
         line: One raw line from log file
-
         """
 
-        parts = line.strip.split(",")
+        parts = line.strip().split(",")
 
         if len(parts) != 4:
             raise ValueError("Invalid format")
-        
+
         timestamp, ip_addr, username, status = parts
-        return LogEntry(timestamp, ip_addr, username, status)
+
+        return LogEntry(
+            timestamp,
+            ip_addr,
+            username,
+            status
+        )
+
+    def parse_file(self, filename):
+        """
+        Read a log file and parse each line into the logentry objects
     
+        :param filename: The name of the file to parse
+        """
 
-def parse_file(self, filename):
-    """
-    Read a log file and parse each line into the logentry objects
-    
-    :param filename: The name of the file to parse
-    """
+        entries = []
 
-    entries = []
+        with open(filename, "r", encoding="utf-8") as file:
+            for line in file:
+                if line.strip():
+                    entries.append(
+                        self.parse_line(line)
+                    )
 
-    with open(filename, "r", encoding="utf-8") as file:
-        for line in file:
-            if line.strip:
-                entries.append(self.parse_line(line))
-
-    return entries
+        return entries
