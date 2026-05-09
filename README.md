@@ -33,3 +33,25 @@ A cyber security log analyzer that cleans and formats log files to show log even
 
 - `log.txt`
   - Sample log file used for testing
+
+# How to Run the Program
+```bash
+chmod +x main.py 
+python3 main.py log.txt 
+```
+
+## Example Output
+
+```bash
+-- Log Report --
+Total successful logins: 5
+Total failed logins: 11
+Suspicious IPs: 3
+Flagged IP addresses:
+- 192.168.1.15
+- 172.16.0.8
+- 192.168.1.30
+```
+
+
+
