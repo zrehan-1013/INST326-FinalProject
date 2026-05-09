@@ -15,9 +15,11 @@ class Analyzer:
         :param entries: A list of LogEntry objects
         """
         count = 0
+
         for entry in entries:
-            if entry.failed_login():
+            if entry.is_failed_login():
                 count += 1
+
         return count
     
     def failed_attempts_by_ip(self, entries):
@@ -33,12 +35,34 @@ class Analyzer:
 
         for entry in entries:
             if entry.is_failed_login():
-                if entry.ip_address not in attempts:
-                    attempts[entry.ip_addr] = 0
-                attempts[entry.ip_addr] += 1
-        return attempts
 
-    def detect_suspicous_ips(self, entries, threshold=3):
+                if entry.ip_addr not in attempts:
+                    attempts[entry.ip_addr] = 0
+
+                attempts[entry.ip_addr] += 1
+
+        return attempts
+    
+    def count_successful_logins(self, entries):
+        """
+        Count successful login attempts.
+
+        Args:
+            entries (list): List of LogEntry objects.
+
+        Returns:
+            int: Number of successful logins.
+        """
+
+        count = 0
+
+        for entry in entries:
+            if entry.is_successful_login():
+                count += 1
+
+        return count
+
+    def detect_suspicious_ips(self, entries, threshold=3):
         """
         Identify IP address with failed login counts of 3 or above.
 
@@ -47,10 +71,14 @@ class Analyzer:
 
         Returns: list of suspicous ips
         """
+
         attempts = self.failed_attempts_by_ip(entries)
+
         suspicious = []
 
-        for ip_address, count in attempts.item():
+        for ip_address, count in attempts.items():
+
             if count >= threshold:
                 suspicious.append(ip_address)
+
         return suspicious
